@@ -1,6 +1,6 @@
 import '../../models/product.dart';
 
-class ProductManager {
+class ProductsManager {
   final List<Product> _items = 
   [    
     Product(

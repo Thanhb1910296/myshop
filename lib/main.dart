@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/ui/products/product_detail_screen.dart';
+import 'package:myshop/ui/products/product_overview_screen.dart';
 import 'package:myshop/ui/products/products_manager.dart';
 
 void main() {
@@ -21,9 +22,7 @@ class MyApp extends StatelessWidget {
         ).copyWith(secondary: Colors.deepOrange),
       ),
       home: SafeArea(
-        child: ProductDetailScreen(
-          ProductManager().items[0],
-        ),
+        child: ProductsOverviewScreen(),
       ),
     );
   }
