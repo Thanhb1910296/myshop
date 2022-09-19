@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/ui/cart/cart_screen.dart';
+import 'package:myshop/ui/order/order_screen.dart';
 // import 'package:myshop/ui/products/product_detail_screen.dart';
 // import 'package:myshop/ui/products/product_overview_screen.dart';
 // import 'package:myshop/ui/products/products_manager.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         ).copyWith(secondary: Colors.deepOrange),
       ),
       home: SafeArea(
-        child: CartScreen(),
+        child: OrdersScreen(),
       ),
     );
   }
