@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:myshop/ui/orders/orders_manager.dart';
 import 'package:provider/provider.dart';
 import 'cart_manager.dart';
 import 'cart_item_card.dart';
-
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
   const CartScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartManager>();
@@ -61,9 +59,14 @@ class CartScreen extends StatelessWidget {
               backgroundColor: Theme.of(context).primaryColor,
             ),
             TextButton(
-              onPressed: () {
-                print('An order has been added');
-              },
+              onPressed: cart.totalAmount <= 0
+                  ? null
+                  : () {
+                      context.read<OrdersManager>().addOrder(
+                            cart.products,
+                            cart.totalAmount,
+                          );
+                    },
               style: TextButton.styleFrom(
                 textStyle: TextStyle(color: Theme.of(context).primaryColor),
               ),
