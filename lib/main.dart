@@ -5,16 +5,17 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (ctx) => ProductsManager(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => CartManager(),
         ),
       ],
       child: MaterialApp(
@@ -38,14 +39,15 @@ class MyApp extends StatelessWidget {
             final productId = settings.arguments as String;
             return MaterialPageRoute(
               builder: (ctx) {
-                return ProductDetailScreen(ctx.read<ProductsManager>().findById(productId),
+                return ProductDetailScreen(
+                  ctx.read<ProductsManager>().findById(productId),
                 );
               },
             );
           }
           return null;
-        }
-      )
+        },
+      ),
     );
     // return MaterialApp(
     //   title: 'My Shop',

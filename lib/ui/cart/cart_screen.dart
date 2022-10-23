@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
 import 'cart_manager.dart';
 import 'cart_item_card.dart';
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
   const CartScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final cart = CartManager();
+    final cart = context.watch<CartManager>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Cart'),
       ),
-      body: Column(children: [
-        buildCartSummary(cart, context),
-        const SizedBox(height: 10),
-        Expanded(
-          child: buildCartDetails(cart),
-        ),
-      ]),
+      body: Column(
+        children: <Widget>[
+          buildCartSummary(cart, context),
+          const SizedBox(height: 10),
+          Expanded(
+            child: buildCartDetails(cart),
+          )
+        ],
+      ),
     );
   }
-
   Widget buildCartDetails(CartManager cart) {
     return ListView(
       children: cart.productEntries
@@ -34,7 +38,6 @@ class CartScreen extends StatelessWidget {
           .toList(),
     );
   }
-
   Widget buildCartSummary(CartManager cart, BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(15),
@@ -42,7 +45,7 @@ class CartScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          children: <Widget>[
             const Text(
               'Total',
               style: TextStyle(fontSize: 20),
@@ -59,13 +62,13 @@ class CartScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                print('An order has been added ');
+                print('An order has been added');
               },
               style: TextButton.styleFrom(
                 textStyle: TextStyle(color: Theme.of(context).primaryColor),
               ),
               child: const Text('ORDER NOW'),
-            ),
+            )
           ],
         ),
       ),
