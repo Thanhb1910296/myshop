@@ -20,10 +20,11 @@ class ProductsService extends FirebaseService {
         print(productsMap['error']);
         return products;
       }
-      final userFavoritesUrl =
-          Uri.parse('$databaseUrl/userFavorites/$userId.json?auth=$token');
+
+      final userFavoritesUrl = Uri.parse('$databaseUrl/userFavorites/$userId.json?auth=$token');
       final userFavoritesResponse = await http.get(userFavoritesUrl);
       final userFavoritesMap = json.decode(userFavoritesResponse.body);
+
       productsMap.forEach((productId, product) {
         final isFavorite = (userFavoritesMap == null)
             ? false
@@ -36,6 +37,7 @@ class ProductsService extends FirebaseService {
         );
       });
       return products;
+
     } catch (error) {
       print(error);
       return products;
@@ -74,7 +76,6 @@ class ProductsService extends FirebaseService {
         url,
         body: json.encode(product.toJson()),
       );
-
       if (response.statusCode != 200) {
         throw Exception(json.decode(response.body)['error']);
       }
@@ -89,7 +90,6 @@ class ProductsService extends FirebaseService {
     try {
       final url = Uri.parse('$databaseUrl/products/$id.json?auth=$token');
       final response = await http.delete(url);
-
       if (response.statusCode != 200) {
         throw Exception(json.decode(response.body)['error']);
       }
@@ -99,7 +99,7 @@ class ProductsService extends FirebaseService {
       return false;
     }
   }
-
+  
   Future<bool> saveFavoriteStatus(Product product) async {
     try {
       final url = Uri.parse(
@@ -110,7 +110,6 @@ class ProductsService extends FirebaseService {
           product.isFavorite,
         ),
       );
-
       if (response.statusCode != 200) {
         throw Exception(json.decode(response.body)['error']);
       }

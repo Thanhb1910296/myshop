@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../models/product.dart';
 import '../shared/dialog_utils.dart';
+
 import 'products_manager.dart';
+
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
   EditProductScreen(
@@ -21,7 +24,9 @@ class EditProductScreen extends StatefulWidget {
       this.product = product;
     }
   }
+
   late final Product product;
+
   @override
   State<EditProductScreen> createState() => _EditProductScreenState();
 }
