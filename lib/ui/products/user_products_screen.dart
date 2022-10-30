@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-
+import 'package:myshop/models/product.dart';
 import 'package:myshop/ui/screens.dart';
 import 'package:provider/provider.dart';
-import 'user_product_list_tile.dart';
 
+import 'user_product_list_tile.dart';
+import 'products_manager.dart';
 import '../shared/app_drawer.dart';
+
 class UserProductScreen extends StatelessWidget {
   static const routeName = '/user-products';
   const UserProductScreen({super.key});
-
   Future<void> _refreshProducts(BuildContext context) async {
     await context.read<ProductsManager>().fetchProducts(true);
   }
-
   @override
   Widget build(BuildContext context) {
     // final productsManager = ProductsManager();
@@ -23,9 +23,11 @@ class UserProductScreen extends StatelessWidget {
           buildAddButton(context),
         ],
       ),
-
       drawer: const AppDrawer(),
-
+      // body: RefreshIndicator(
+      //   onRefresh: () async => print('refresh products'),
+      //   child: buildUserProductListView(productsManager),
+      // ),
       body: FutureBuilder(
         future: _refreshProducts(context),
         builder: (ctx, snapshot) {
@@ -42,7 +44,7 @@ class UserProductScreen extends StatelessWidget {
       ),
     );
   }
-
+  // Widget buildUserProductListView(ProductsManager productsManager)
   Widget buildUserProductListView() {
     return Consumer<ProductsManager>(
       builder: (ctx, productsManager, child) {
@@ -60,7 +62,6 @@ class UserProductScreen extends StatelessWidget {
       },
     );
   }
-
   Widget buildAddButton(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.add),
