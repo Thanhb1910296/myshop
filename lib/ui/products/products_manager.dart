@@ -2,11 +2,10 @@ import 'package:flutter/foundation.dart';
 import '../../models/auth_token.dart';
 import '../../models/product.dart';
 import '../../services/products_service.dart';
-
 class ProductsManager with ChangeNotifier {
   List<Product> _items = [];
   final ProductsService _productsService;
-  
+
   ProductsManager([AuthToken? authToken])
       : _productsService = ProductsService(authToken);
   set authToken(AuthToken? authToken) {
@@ -26,14 +25,35 @@ class ProductsManager with ChangeNotifier {
     }
   }
 
+  Future<void> updateProduct(Product product) async {
+    final index = _items.indexWhere((item) => item.id == product.id);
+    if (index >= 0) {
+      if (await _productsService.updateProduct(product)) {
+        _items[index] = product;
+        notifyListeners();
+      }
+    }
+  }
+
+  Future<void> deleteProduct(String id) async {
+    final index = _items.indexWhere((item) => item.id == id);
+    Product? existingProduct = _items[index];
+    _items.removeAt(index);
+    notifyListeners();
+    if (!await _productsService.deleteProduct(id)) {
+      _items.insert(index, existingProduct);
+      notifyListeners();
+    }
+  }
+
   int get itemCount {
     return _items.length;
   }
-
+  
   List<Product> get items {
     return [..._items];
   }
-
+  
   List<Product> get favoriteItems {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
@@ -42,8 +62,11 @@ class ProductsManager with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void toggleFavoriteStatus(Product product) {
+  Future<void> toggleFavoriteStatus(Product product) async {
     final savedStatus = product.isFavorite;
     product.isFavorite = !savedStatus;
+    if (!await _productsService.saveFavoriteStatus(product)) {
+      product.isFavorite = savedStatus;
+    }
   }
 }

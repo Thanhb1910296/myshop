@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/ui/products/products_manager.dart';
-import 'package:provider/provider.dart';
 import '../../models/product.dart';
-import '../cart/cart_manager.dart';
 import 'product_detail_screen.dart';
-
+import 'package:provider/provider.dart';
+import '../cart/cart_manager.dart';
+import 'products_manager.dart';
 class ProductGridTile extends StatelessWidget {
   const ProductGridTile(
     this.product, {
     super.key,
   });
-
   final Product product;
-
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -47,7 +44,7 @@ class ProductGridTile extends StatelessWidget {
     return GridTileBar(
       backgroundColor: Colors.black87,
       leading: ValueListenableBuilder<bool>(
-      valueListenable: product.isFavoriteListenable,
+          valueListenable: product.isFavoriteListenable,
           builder: (ctx, isFavorite, child) {
             return IconButton(
               icon: Icon(
