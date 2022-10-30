@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:myshop/ui/products/products_manager.dart';
-import 'package:provider/provider.dart';
 import '../../models/product.dart';
-
-import '../products/edit_product_screen.dart';
-
+import 'package:provider/provider.dart';
+import 'products_manager.dart';
+import 'edit_product_screen.dart';
 class UserProductListTile extends StatelessWidget {
   final Product product;
+  const UserProductListTile(this.product, {super.key});
 
-  const UserProductListTile(
-    this.product, {
-    super.key,
-  });
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -30,17 +25,18 @@ class UserProductListTile extends StatelessWidget {
       ),
     );
   }
+
   Widget buildDeleteButton(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.delete),
-      onPressed: () async {
-        // context.read<ProductsManager>().deleteProduct(product.id!);
+      onPressed: () {
+        context.read<ProductsManager>().deleteProduct(product.id!);
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(
             const SnackBar(
               content: Text(
-                'Product deleted!',
+                'Product deleted',
                 textAlign: TextAlign.center,
               ),
             ),
@@ -49,6 +45,7 @@ class UserProductListTile extends StatelessWidget {
       color: Theme.of(context).errorColor,
     );
   }
+
   Widget buildEditButton(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.edit),

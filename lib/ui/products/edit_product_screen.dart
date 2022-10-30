@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../models/product.dart';
 import '../shared/dialog_utils.dart';
-
 import 'products_manager.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
+
   EditProductScreen(
     Product? product, {
     super.key,
@@ -30,18 +29,21 @@ class EditProductScreen extends StatefulWidget {
   @override
   State<EditProductScreen> createState() => _EditProductScreenState();
 }
+
 class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _editForm = GlobalKey<FormState>();
   late Product _editedProduct;
   var _isLoading = false;
+
   bool _isValidImageUrl(String value) {
     return (value.startsWith('http') ||
         value.startsWith('http') && (value.endsWith('.png')) ||
         value.endsWith('.jgp') ||
         value.endsWith('.jpeg'));
   }
+
   @override
   void initState() {
     _imageUrlFocusNode.addListener(() {
@@ -56,18 +58,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _imageUrlController.text = _editedProduct.imageUrl;
     super.initState();
   }
+
   @override
   void dispose() {
     _imageUrlController.dispose();
     _imageUrlFocusNode.dispose();
     super.dispose();
   }
+
   Future<void> _saveForm() async {
     final isValid = _editForm.currentState!.validate();
     if (!isValid) {
       return;
     }
     _editForm.currentState!.save();
+
     setState(() {
       _isLoading = true;
     });
@@ -84,10 +89,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
     setState(() {
       _isLoading = false;
     });
+
     if (mounted) {
       Navigator.of(context).pop();
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,6 +127,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ),
     );
   }
+
   TextFormField buildTitleField() {
     return TextFormField(
       initialValue: _editedProduct.title,
@@ -137,6 +145,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       },
     );
   }
+
   TextFormField buildPriceField() {
     return TextFormField(
       initialValue: _editedProduct.price.toString(),
@@ -160,6 +169,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       },
     );
   }
+
   TextFormField buildDescriptionField() {
     return TextFormField(
       initialValue: _editedProduct.description,
@@ -180,6 +190,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       },
     );
   }
+
   Widget buildProductPreview() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -212,6 +223,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       ],
     );
   }
+
   TextFormField buildImageURLField() {
     return TextFormField(
       decoration: const InputDecoration(labelText: 'Image URL'),

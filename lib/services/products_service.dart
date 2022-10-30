@@ -9,22 +9,30 @@ class ProductsService extends FirebaseService {
 
   Future<List<Product>> fetchProducts([bool filterByUser = false]) async {
     final List<Product> products = [];
+
     try {
       final filters =
           filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+
       final productsUrl =
           Uri.parse('$databaseUrl/products.json?auth=$token&$filters');
+
       final response = await http.get(productsUrl);
+
       final productsMap = json.decode(response.body) as Map<String, dynamic>;
+
       if (response.statusCode != 200) {
         print(productsMap['error']);
         return products;
       }
 
-      final userFavoritesUrl = Uri.parse('$databaseUrl/userFavorites/$userId.json?auth=$token');
-      final userFavoritesResponse = await http.get(userFavoritesUrl);
-      final userFavoritesMap = json.decode(userFavoritesResponse.body);
+      final userFavoritesUrl =
+          Uri.parse('$databaseUrl/userFavorites/$userId.json?auth=$token');
 
+      final userFavoritesResponse = await http.get(userFavoritesUrl);
+
+      final userFavoritesMap = json.decode(userFavoritesResponse.body);
+      
       productsMap.forEach((productId, product) {
         final isFavorite = (userFavoritesMap == null)
             ? false
@@ -37,7 +45,6 @@ class ProductsService extends FirebaseService {
         );
       });
       return products;
-
     } catch (error) {
       print(error);
       return products;
@@ -99,7 +106,7 @@ class ProductsService extends FirebaseService {
       return false;
     }
   }
-  
+
   Future<bool> saveFavoriteStatus(Product product) async {
     try {
       final url = Uri.parse(

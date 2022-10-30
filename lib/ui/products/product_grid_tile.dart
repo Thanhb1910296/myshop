@@ -4,12 +4,14 @@ import 'product_detail_screen.dart';
 import 'package:provider/provider.dart';
 import '../cart/cart_manager.dart';
 import 'products_manager.dart';
+
 class ProductGridTile extends StatelessWidget {
   const ProductGridTile(
     this.product, {
     super.key,
   });
   final Product product;
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -40,6 +42,7 @@ class ProductGridTile extends StatelessWidget {
       ),
     );
   }
+
   Widget buildGridFooterBar(BuildContext context) {
     return GridTileBar(
       backgroundColor: Colors.black87,
@@ -52,7 +55,7 @@ class ProductGridTile extends StatelessWidget {
               ),
               color: Theme.of(context).colorScheme.secondary,
               onPressed: () {
-                ctx.read<ProductsManager>().toggleFavoriteStatus(product);
+                ctx.read<ProductsManager>().tonggleFavoriteStatus(product);
               },
             );
           }),

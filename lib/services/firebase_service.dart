@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import '../models/auth_token.dart';
 
 abstract class FirebaseService {
@@ -21,7 +20,7 @@ abstract class FirebaseService {
 
   @protected
   String? get token => _token;
-
+  
   @protected
   String? get userId => _userId;
 }

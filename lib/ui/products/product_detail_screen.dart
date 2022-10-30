@@ -6,9 +6,8 @@ class ProductDetailScreen extends StatelessWidget {
   static const routeName = '/product-detail';
   const ProductDetailScreen(
     this.product, {
-      super.key
-    }
-  );
+    super.key,
+  });
 
   final Product product;
 
@@ -29,7 +28,7 @@ class ProductDetailScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 10,),
             Text(
               '\$${product.price}',
               style: const TextStyle(
@@ -37,7 +36,9 @@ class ProductDetailScreen extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
@@ -46,7 +47,7 @@ class ProductDetailScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),
-            ),
+            )
           ],
         ),
       ),

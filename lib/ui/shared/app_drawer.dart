@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../orders/orders_screen.dart';
 import '../products/user_products_screen.dart';
+import 'package:provider/provider.dart';
 import '../auth/auth_manager.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -26,20 +26,20 @@ class AppDrawer extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text('Manage Products'),
+            leading: const Icon(Icons.payment),
+            title: const Text('Order'),
             onTap: () {
               Navigator.of(context)
-                  .pushReplacementNamed(UserProductScreen.routeName);
+                  .pushReplacementNamed(OrdersScreen.routeName);
             },
           ),
           const Divider(),
           ListTile(
-            leading: const Icon(Icons.payment),
-            title: const Text('Orders'),
+            leading: const Icon(Icons.edit),
+            title: const Text('Manage Products'),
             onTap: () {
               Navigator.of(context)
-                  .pushReplacementNamed(OrdersScreen.routeName);
+                  .pushReplacementNamed(UserProductsScreen.routeName);
             },
           ),
           const Divider(),

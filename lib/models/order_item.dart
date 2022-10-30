@@ -5,7 +5,7 @@ class OrderItem {
   final double amount;
   final List<CartItem> products;
   final DateTime dateTime;
-
+  
   int get productCount {
     return products.length;
   }
@@ -16,7 +16,7 @@ class OrderItem {
     required this.products,
     DateTime? dateTime,
   }) : dateTime = dateTime ?? DateTime.now();
-  
+
   OrderItem copyWith({
     String? id,
     double? amount,

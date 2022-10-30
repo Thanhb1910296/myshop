@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import '../../models/auth_token.dart';
+// import 'package:provider/provider.dart';
 import '../../models/product.dart';
 import '../../services/products_service.dart';
+
 class ProductsManager with ChangeNotifier {
   List<Product> _items = [];
   final ProductsService _productsService;
-
   ProductsManager([AuthToken? authToken])
       : _productsService = ProductsService(authToken);
   set authToken(AuthToken? authToken) {
@@ -23,6 +24,22 @@ class ProductsManager with ChangeNotifier {
       _items.add(newProduct);
       notifyListeners();
     }
+  }
+
+  int get itemCount {
+    return _items.length;
+  }
+
+  List<Product> get items {
+    return [..._items];
+  }
+
+  List<Product> get favoriteItems {
+    return _items.where((prodItem) => prodItem.isFavorite).toList();
+  }
+
+  Product findById(String id) {
+    return _items.firstWhere((prod) => prod.id == id);
   }
 
   Future<void> updateProduct(Product product) async {
@@ -46,23 +63,7 @@ class ProductsManager with ChangeNotifier {
     }
   }
 
-  int get itemCount {
-    return _items.length;
-  }
-  
-  List<Product> get items {
-    return [..._items];
-  }
-  
-  List<Product> get favoriteItems {
-    return _items.where((prodItem) => prodItem.isFavorite).toList();
-  }
-
-  Product findById(String id) {
-    return _items.firstWhere((prod) => prod.id == id);
-  }
-
-  Future<void> toggleFavoriteStatus(Product product) async {
+  Future<void> tonggleFavoriteStatus(Product product) async {
     final savedStatus = product.isFavorite;
     product.isFavorite = !savedStatus;
     if (!await _productsService.saveFavoriteStatus(product)) {
